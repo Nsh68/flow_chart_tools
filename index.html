@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>השוואת כלי ניהול עבודה ותהליכים</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-dark: #1a3a5c;
+    --blue-mid: #2563a8;
+    --blue-light: #dbeafe;
+    --green-bg: #dcfce7;
+    --green-text: #166534;
+    --red-bg: #fee2e2;
+    --red-text: #991b1b;
+    --yellow-bg: #fef9c3;
+    --yellow-text: #854d0e;
+    --border: #e5e7eb;
+    --text-main: #000000;
+    --text-muted: #1f2937;
+    --bg-page: #f8fafc;
+    --bg-white: #ffffff;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Heebo', sans-serif; direction: rtl; background: var(--bg-page); color: var(--text-main); line-height: 1.6; padding: 0 0 60px 0; }
+
+  header { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%); color: white; padding: 36px 32px 28px; text-align: center; }
+  header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  header p { font-size: 13.5px; opacity: 1; font-weight: 400; }
+
+  .container { max-width: 1400px; margin: 0 auto; padding: 28px 20px 0; }
+
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 16px; font-size: 12.5px; color: var(--text-muted); align-items: center; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+
+  .badge { display: inline-block; padding: 2px 7px; border-radius: 20px; font-size: 11px; font-weight: 600; white-space: normal; line-height: 1.45; }
+  .badge-yes  { background: var(--green-bg); color: var(--green-text); }
+  .badge-no   { background: var(--red-bg);   color: var(--red-text); }
+  .badge-part { background: var(--yellow-bg); color: var(--yellow-text); }
+  .badge-info { background: var(--blue-light); color: var(--blue-dark); }
+
+  .group-label td {
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-bottom: 1px solid #bfdbfe;
+    letter-spacing: 0.3px;
+  }
+
+  .table-wrap { background: var(--bg-white); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+
+  thead th {
+    background: var(--blue-dark);
+    color: #e0edff;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 12px 10px;
+    text-align: right;
+    border-left: 1px solid rgba(255,255,255,0.07);
+    vertical-align: bottom;
+  }
+  thead th:last-child { border-left: none; }
+
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.12s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover td { background: #f0f6ff !important; }
+  tbody tr:nth-child(even) td { background: #fafbfd; }
+
+  tbody td { padding: 11px 10px; font-size: 12.5px; vertical-align: top; border-left: 1px solid var(--border); color: var(--text-main); line-height: 1.5; }
+  tbody td:last-child { border-left: none; }
+
+  .tool-name { font-size: 13px; font-weight: 700; color: var(--blue-mid); text-decoration: underline; text-underline-offset: 3px; display: block; margin-bottom: 3px; }
+  .tool-name:hover { color: var(--blue-dark); text-decoration: underline; }
+  .tool-desc { font-size: 11px; color: var(--text-muted); font-weight: 300; }
+
+  .stars { color: #f59e0b; font-size: 12px; display: block; margin-top: 2px; letter-spacing: 1px; }
+  .stars-label { font-size: 10.5px; color: #374151; }
+
+  ul.list { padding-right: 13px; margin: 0; font-size: 12px; }
+  ul.list li { margin-bottom: 3px; }
+  ul.list li::marker { color: var(--blue-mid); }
+
+  .sub { font-size: 10.5px; color: var(--text-muted); margin-top: 3px; }
+
+  .note-box { background: #fffbeb; border-right: 4px solid #f59e0b; border-radius: 0 8px 8px 0; padding: 8px 10px; font-size: 12px; color: #78350f; margin-top: 6px; }
+
+  .section-title { font-size: 17px; font-weight: 700; color: var(--blue-dark); margin: 32px 0 12px; padding-bottom: 7px; border-bottom: 2px solid var(--blue-light); }
+
+  .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 8px; }
+
+  .note-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 16px 16px 14px; box-shadow: var(--shadow); }
+  .note-card h3 { font-size: 14px; font-weight: 700; color: var(--blue-dark); margin-bottom: 4px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .level-badge { font-size: 10.5px; padding: 2px 7px; border-radius: 20px; font-weight: 600; }
+  .middle-school { background: #ede9fe; color: #4c1d95; }
+  .high-school   { background: #fce7f3; color: #831843; }
+  .both          { background: #dcfce7; color: #14532d; }
+  .diagram-only  { background: #fef3c7; color: #92400e; }
+
+  .note-card p { font-size: 12.5px; color: #374151; margin-top: 7px; line-height: 1.55; }
+  .note-card ul { padding-right: 15px; margin-top: 7px; font-size: 12.5px; color: var(--text-main); }
+  .note-card ul li { margin-bottom: 4px; }
+
+  .footer-note { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-top: 24px; font-size: 13px; color: #1f2937; box-shadow: var(--shadow); line-height: 1.9; }
+  .footer-note strong { color: var(--text-main); }
+
+  @media (max-width: 700px) {
+    header { padding: 22px 14px; }
+    header h1 { font-size: 18px; }
+    .container { padding: 16px 8px 0; }
+    thead th, tbody td { padding: 8px 7px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>השוואת כלי ניהול עבודה, פרויקטים ותרשימי זרימה</h1>
+  <p>מדריך לסטודנטים ותלמידים — מה הכי מתאים לכם? | עודכן מאי 2026 — נורית שושני-הכל</p>
+</header>
+
+<div class="container">
+
+  <div class="legend">
+    <span>מקרא:</span>
+    <span class="legend-item"><span class="badge badge-yes">כן</span> זמין / מוצלח</span>
+    <span class="legend-item"><span class="badge badge-part">חלקית</span> מוגבל / בסיסי</span>
+    <span class="legend-item"><span class="badge badge-no">לא</span> לא זמין</span>
+    <span style="color:var(--text-muted)">| הכלים מסודרים מהקל לשימוש למורכב, תוך מתן עדיפות לתמיכה בעברית</span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:8%">שם הכלי</th>
+          <th style="width:9%">האם חינמי?</th>
+          <th style="width:6%">הרשמה נדרשת?</th>
+          <th style="width:9%">כמה פרויקטים/לוחות בחינם</th>
+          <th style="width:7%">כמה אנשים יחד</th>
+          <th style="width:6%">קלות שימוש</th>
+          <th style="width:5%">אפליקציה לנייד</th>
+          <th style="width:5%">ממשק בעברית</th>
+          <th style="width:7%">תרשימי זרימה</th>
+          <th style="width:6%">בינה מלאכותית</th>
+          <th style="width:16%">יתרונות עיקריים</th>
+          <th style="width:16%">חסרונות עיקריים</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- GROUP 1: Hebrew support -->
+        <tr class="group-label"><td colspan="12">🇮🇱 כלים עם תמיכה בעברית — מומלצים לדוברי עברית</td></tr>
+
+        <!-- monday.com -->
+        <tr>
+          <td><a class="tool-name" href="https://monday.com" target="_blank">monday.com</a><span class="tool-desc">ניהול פרויקטים ויזואלי</span></td>
+          <td><span class="badge badge-part">חינמי לשניים בלבד</span><div class="sub">לקבוצה גדולה יותר — בתשלום</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>3 לוחות עבודה בלבד</td>
+          <td>2 אנשים בלבד בחינם</td>
+          <td><span class="stars">★★★★☆</span><span class="stars-label">אינטואיטיבי</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-yes">כן — עברית מלאה!</span></td>
+          <td><span class="badge badge-part">בסיסי בלבד</span></td>
+          <td><span class="badge badge-part">בתשלום נוסף</span></td>
+          <td><ul class="list"><li>הכלי היחיד עם עברית מלאה</li><li>תצוגה ויזואלית צבעונית</li><li>תבניות מוכנות רבות</li><li>אוטומציות חכמות</li></ul></td>
+          <td><ul class="list"><li>חינמי רק לשני אנשים — לא מתאים לקבוצת לימוד</li><li>מחיר גבוה מאוד לקבוצה</li><li>תרשימי זרימה בסיסיים בלבד</li></ul></td>
+        </tr>
+
+        <!-- Canva -->
+        <tr>
+          <td><a class="tool-name" href="https://canva.com" target="_blank">Canva</a><span class="tool-desc">עיצוב ותרשימים ויזואליים</span></td>
+          <td><span class="badge badge-yes">כן — חינמי לגמרי</span><div class="sub">תוכנית חינמית נדיבה מאוד</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>עיצובים ותבניות ללא הגבלה</td>
+          <td>עד 10 אנשים בחינם</td>
+          <td><span class="stars">★★★★★</span><span class="stars-label">הפשוט ביותר</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-yes">כן — ממשק בעברית!</span></td>
+          <td><span class="badge badge-yes">כן — תבניות מוכנות</span></td>
+          <td><span class="badge badge-part">חלק מהתכונות חינמיות</span></td>
+          <td><ul class="list"><li>ממשק עברי מלא</li><li>תרשימי זרימה עם תבניות מוכנות</li><li>עיצוב יפה ומקצועי בקלות</li><li>שיתוף קל עם הקבוצה</li></ul></td>
+          <td><ul class="list"><li>לא כלי ניהול פרויקטים — עיצוב בלבד</li><li>תרשימים פחות מדויקים מכלים ייעודיים</li><li>אחסון מוגבל בחינם</li></ul></td>
+        </tr>
+
+        <!-- GROUP 2: Easy, no Hebrew -->
+        <tr class="group-label"><td colspan="12">✅ כלים קלים לשימוש — ממשק באנגלית</td></tr>
+
+        <!-- Todoist -->
+        <tr>
+          <td><a class="tool-name" href="https://todoist.com" target="_blank">Todoist</a><span class="tool-desc">ניהול משימות אישיות</span></td>
+          <td><span class="badge badge-yes">כן — חינמי</span><div class="sub">מוגבל ל-5 פרויקטים פעילים</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>5 פרויקטים פעילים בו-זמנית</td>
+          <td>עד 5 אנשים לפרויקט</td>
+          <td><span class="stars">★★★★★</span><span class="stars-label">פשוט מאוד</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><ul class="list"><li>הפשוט ביותר למתחילים</li><li>תזכורות ותאריכי יעד</li><li>עובד על כל מכשיר</li></ul></td>
+          <td><ul class="list"><li>רק 5 פרויקטים בחינם</li><li>לוח ויזואלי — בתשלום בלבד</li><li>אין תרשימי זרימה</li></ul></td>
+        </tr>
+
+        <!-- Notion -->
+        <tr>
+          <td><a class="tool-name" href="https://notion.so" target="_blank">Notion</a><span class="tool-desc">סביבת עבודה הכוללת הכל</span></td>
+          <td><span class="badge badge-yes">כן — חינמי לגמרי</span><div class="sub">הנחת סטודנטים — חינמי מלא לאחר אימות</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>דפים ופרויקטים ללא הגבלה</td>
+          <td>ללא הגבלה (אורחים קוראים בלבד)</td>
+          <td><span class="stars">★★★★☆</span><span class="stars-label">גמיש, דורש הגדרה</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-part">בסיסי מאוד</span></td>
+          <td><span class="badge badge-part">בתשלום נוסף</span></td>
+          <td><ul class="list"><li>הכל במקום אחד: מסמכים, משימות, ידע</li><li>הנחת סטודנטים</li><li>תבניות לסיכומי שיעורים</li></ul></td>
+          <td><ul class="list"><li>דורש הגדרה ידנית מאפס</li><li>לא כלי ניהול ייעודי</li><li>תרשימי זרימה בסיסיים מאוד</li></ul></td>
+        </tr>
+
+        <!-- Asana -->
+        <tr>
+          <td><a class="tool-name" href="https://asana.com" target="_blank">Asana</a><span class="tool-desc">ניהול משימות לצוותים</span></td>
+          <td><span class="badge badge-yes">כן — חינמי לצוות קטן</span><div class="sub">חינמי עד 10 אנשים בצוות</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>פרויקטים ומשימות ללא הגבלה</td>
+          <td>עד 10 אנשים יחד בחינם</td>
+          <td><span class="stars">★★★★☆</span><span class="stars-label">ממשק נוח</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><span class="badge badge-part">בתשלום נוסף</span></td>
+          <td><ul class="list"><li>עיצוב נקי וברור</li><li>מעקב התקדמות לקבוצה</li><li>חינמי עד 10 תלמידים</li></ul></td>
+          <td><ul class="list"><li>ציר זמן — בתשלום בלבד</li><li>אוטומציות — בתשלום בלבד</li><li>אין תרשימי זרימה</li></ul></td>
+        </tr>
+
+        <!-- GROUP 3: More complex -->
+        <tr class="group-label"><td colspan="12">🔧 כלים מורכבים יותר — לתלמידי תיכון ומעלה</td></tr>
+
+        <!-- Miro -->
+        <tr>
+          <td><a class="tool-name" href="https://miro.com" target="_blank">Miro</a><span class="tool-desc">לוח לבן שיתופי לתרשימים</span></td>
+          <td><span class="badge badge-yes">כן — חינמי</span><div class="sub">חינמי עד 3 לוחות עבודה</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>3 לוחות עבודה בחינם</td>
+          <td>ללא הגבלת משתתפים</td>
+          <td><span class="stars">★★★☆☆</span><span class="stars-label">דורש הכרות</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-yes">כן — מצוין לתרשימים!</span></td>
+          <td><span class="badge badge-part">בתשלום נוסף</span></td>
+          <td><ul class="list"><li>לוח לבן שיתופי — כולם עובדים יחד בזמן אמת</li><li>תרשימי זרימה מקצועיים</li><li>תבניות מוכנות רבות</li><li>מצוין לסיעור מוחות</li></ul></td>
+          <td><ul class="list"><li>רק 3 לוחות בחינם</li><li>לא כלי ניהול משימות</li><li>אנגלית בלבד</li></ul></td>
+        </tr>
+
+        <!-- ClickUp -->
+        <tr>
+          <td><a class="tool-name" href="https://clickup.com" target="_blank">ClickUp</a><span class="tool-desc">ניהול פרויקטים כולל הכל</span></td>
+          <td><span class="badge badge-yes">כן — חינמי לגמרי</span><div class="sub">100 מ"ב אחסון בחינם</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>פרויקטים ומשימות ללא הגבלה</td>
+          <td>ללא הגבלת חברי צוות</td>
+          <td><span class="stars">★★★☆☆</span><span class="stars-label">עמוס, דורש זמן לימוד</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-part">לוח לבן בסיסי</span></td>
+          <td><span class="badge badge-part">בתשלום נוסף</span></td>
+          <td><ul class="list"><li>הכי הרבה פיצ'רים חינמיים</li><li>ניהול קבוצה ללא הגבלה</li><li>מסמכים ומשימות יחד</li></ul></td>
+          <td><ul class="list"><li>ממשק עמוס ומסובך למתחילים</li><li>100 מ"ב אחסון בלבד</li><li>תרשימי זרימה בסיסיים בלבד</li></ul></td>
+        </tr>
+
+        <!-- Lucidchart -->
+        <tr>
+          <td><a class="tool-name" href="https://lucidchart.com" target="_blank">Lucidchart</a><span class="tool-desc">תרשימי זרימה מקצועיים</span></td>
+          <td><span class="badge badge-yes">כן — חינמי</span><div class="sub">חינמי עד 3 תרשימים שמורים</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>3 תרשימים שמורים בלבד</td>
+          <td>שיתוף עם אחרים בצפייה</td>
+          <td><span class="stars">★★★☆☆</span><span class="stars-label">מקצועי, טכני קצת</span></td>
+          <td><span class="badge badge-part">מוגבל</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-yes">כן — מקצועי מאוד!</span></td>
+          <td><span class="badge badge-no">לא בחינם</span></td>
+          <td><ul class="list"><li>תרשימי זרימה מקצועיים ומדויקים</li><li>תבניות רבות לכל סוגי התרשימים</li><li>מחובר ל-Google Drive</li></ul></td>
+          <td><ul class="list"><li>רק 3 תרשימים בחינם — מוגבל מאוד</li><li>לא כלי ניהול משימות</li><li>אנגלית בלבד</li></ul></td>
+        </tr>
+
+        <!-- Linear -->
+        <tr>
+          <td><a class="tool-name" href="https://linear.app" target="_blank">Linear</a><span class="tool-desc">מעקב משימות לתכנות בלבד</span></td>
+          <td><span class="badge badge-yes">כן — חינמי</span><div class="sub">עד 250 משימות שמורות בסך הכל</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>עד 250 משימות שמורות (ניתן למחוק ישנות)</td>
+          <td>עד 10 אנשים יחד בחינם</td>
+          <td><span class="stars">★★★☆☆</span><span class="stars-label">מהיר, טכני</span></td>
+          <td><span class="badge badge-yes">כן</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><ul class="list"><li>מהיר ונקי מאוד</li><li>מיועד לפרויקטי תכנות</li><li>מחובר ל-GitHub</li></ul></td>
+          <td><ul class="list"><li>לתכנות בלבד — לא לשימוש כללי</li><li>250 משימות שמורות בלבד</li><li>אנגלית בלבד</li></ul></td>
+        </tr>
+
+        <!-- GROUP 4: Advanced -->
+        <tr class="group-label"><td colspan="12">🎓 כלים מתקדמים — לתלמידי תיכון עם ניסיון טכני</td></tr>
+
+        <!-- draw.io -->
+        <tr>
+          <td><a class="tool-name" href="https://app.diagrams.net" target="_blank">draw.io</a><span class="tool-desc">תרשימי זרימה חינמיים לחלוטין</span></td>
+          <td><span class="badge badge-yes">חינמי לחלוטין — ללא תשלום</span><div class="sub">כל הפיצ'רים חינמיים תמיד</div></td>
+          <td><span class="badge badge-no">לא! ניתן לשימוש מיידי</span></td>
+          <td>ללא הגבלה — שומר ישירות ל-Google Drive</td>
+          <td>שיתוף דרך Google Drive</td>
+          <td><span class="stars">★★☆☆☆</span><span class="stars-label">ממשק ישן, דורש לימוד</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-yes">כן — מקצועי ומלא!</span></td>
+          <td><span class="badge badge-no">לא</span></td>
+          <td><ul class="list"><li>חינמי לגמרי — ללא הגבלה לעולם</li><li>אין צורך בהרשמה בכלל</li><li>תרשימי זרימה מקצועיים ומדויקים</li><li>שמירה ישירה ל-Google Drive</li></ul></td>
+          <td><ul class="list"><li>ממשק ישן ולא נוח</li><li>לא מתאים למתחילים</li><li>אין אפליקציה לנייד</li><li>אנגלית בלבד</li></ul></td>
+        </tr>
+
+        <!-- Figma -->
+        <tr>
+          <td><a class="tool-name" href="https://figma.com" target="_blank">Figma</a><span class="tool-desc">עיצוב + תרשימים (FigJam)</span></td>
+          <td><span class="badge badge-yes">כן — חינמי לסטודנטים</span><div class="sub">הנחת סטודנטים זמינה</div></td>
+          <td><span class="badge badge-yes">כן — חובה</span></td>
+          <td>3 פרויקטים פעילים בחינם</td>
+          <td>שיתוף עם צופים ללא הגבלה</td>
+          <td><span class="stars">★★☆☆☆</span><span class="stars-label">מקצועי, מורכב</span></td>
+          <td><span class="badge badge-part">מוגבל</span></td>
+          <td><span class="badge badge-no">לא — אנגלית</span></td>
+          <td><span class="badge badge-yes">כן — דרך FigJam</span></td>
+          <td><span class="badge badge-part">בתשלום נוסף</span></td>
+          <td><ul class="list"><li>תרשימי זרימה יפים דרך FigJam</li><li>מקצועי מאוד לעיצוב</li><li>הנחת סטודנטים</li><li>שיתוף פעולה בזמן אמת</li></ul></td>
+          <td><ul class="list"><li>מיועד בעיקר לעיצוב — לא לניהול</li><li>עקומת לימוד תלולה</li><li>3 פרויקטים בלבד בחינם</li><li>אנגלית בלבד</li></ul></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Notes for students -->
+  <h2 class="section-title">המלצות לפי גיל ומטרה</h2>
+
+  <div class="notes-grid">
+
+    <div class="note-card">
+      <h3>Todoist <span class="level-badge middle-school">חטיבת ביניים</span></h3>
+      <p><strong>מה זה?</strong> רשימת משימות פשוטה וחכמה.</p>
+      <ul>
+        <li>מושלם לתלמידי חטיבה — פשוט, לא מבלבל</li>
+        <li>מעקב שיעורי בית לפי מקצוע</li>
+        <li>תזכורות לפני הגשות</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> לא מתאים לפרויקטים קבוצתיים גדולים</div>
+    </div>
+
+    <div class="note-card">
+      <h3>monday.com <span class="level-badge both">חטיבה ותיכון — עברית!</span></h3>
+      <p><strong>מה זה?</strong> כלי ניהול ויזואלי עם ממשק מלא בעברית.</p>
+      <ul>
+        <li>הכלי היחיד עם עברית מלאה</li>
+        <li>מושלם לתלמיד שמתקשה באנגלית</li>
+        <li>מתאים לעבודה אישית או עם חבר אחד</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> חינמי רק לשני אנשים — לקבוצה גדולה יותר צריך לשלם</div>
+    </div>
+
+    <div class="note-card">
+      <h3>Canva <span class="level-badge both">חטיבה ותיכון — עברית!</span></h3>
+      <p><strong>מה זה?</strong> כלי עיצוב עם תמיכה בתרשימי זרימה ועברית מלאה.</p>
+      <ul>
+        <li>הפשוט ביותר לתרשימי זרימה יפים</li>
+        <li>ממשק עברי — קל לתלמידי חטיבה</li>
+        <li>תבניות מוכנות לכל סוג מצגת ותרשים</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> מומלץ לתרשימי זרימה פשוטים ויפים — הכי קל לשימוש</div>
+    </div>
+
+    <div class="note-card">
+      <h3>Notion <span class="level-badge both">חטיבה ותיכון</span></h3>
+      <p><strong>מה זה?</strong> מחברת דיגיטלית + ניהול + מאגר ידע.</p>
+      <ul>
+        <li>מעולה לסיכומים ופרויקטי חקר</li>
+        <li>הנחת סטודנטים — חינמי עם מייל בית ספר</li>
+        <li>תבניות מוכנות לסיכומי שיעורים</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> מומלץ מאוד לתיכון — ניהול כל חומר הלימוד במקום אחד</div>
+    </div>
+
+    <div class="note-card">
+      <h3>Asana <span class="level-badge high-school">תיכון</span></h3>
+      <p><strong>מה זה?</strong> ניהול משימות לצוות בממשק נקי.</p>
+      <ul>
+        <li>מעולה לפרויקטים קבוצתיים</li>
+        <li>כל אחד רואה מה מוטל עליו</li>
+        <li>חינמי עד 10 תלמידים</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> לא מתאים לחטיבה — אנגלית בלבד</div>
+    </div>
+
+    <div class="note-card">
+      <h3>ClickUp <span class="level-badge high-school">תיכון</span></h3>
+      <p><strong>מה זה?</strong> כלי ניהול פרויקטים מקצועי עם הרבה אפשרויות.</p>
+      <ul>
+        <li>מתאים לפרויקטי חקר גדולים</li>
+        <li>ניהול קבוצה ללא הגבלת משתתפים</li>
+        <li>לוח זמנים, משימות ומסמכים יחד</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> לא מתאים לחטיבה — ממשק מורכב ובאנגלית</div>
+    </div>
+
+    <div class="note-card">
+      <h3>Miro <span class="level-badge high-school">תיכון — תרשימים</span></h3>
+      <p><strong>מה זה?</strong> לוח לבן שיתופי לתרשימים וסיעור מוחות.</p>
+      <ul>
+        <li>מצוין לתרשימי זרימה קבוצתיים</li>
+        <li>כולם עובדים יחד בזמן אמת</li>
+        <li>תבניות מוכנות רבות</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> רק 3 לוחות בחינם — חסוך אותם לפרויקטים חשובים</div>
+    </div>
+
+    <div class="note-card">
+      <h3>draw.io <span class="level-badge high-school">תיכון — תרשימים בלבד</span></h3>
+      <p><strong>מה זה?</strong> כלי תרשימים חינמי לחלוטין — ללא הרשמה.</p>
+      <ul>
+        <li>חינמי לגמרי ללא שום הגבלה</li>
+        <li>אין צורך להירשם — פותחים ומשתמשים</li>
+        <li>תרשימי זרימה מקצועיים ומדויקים</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ממשק ישן ולא נוח — דורש קצת סבלנות</div>
+    </div>
+
+    <div class="note-card">
+      <h3>Linear <span class="level-badge high-school">תיכון — תכנות בלבד</span></h3>
+      <p><strong>מה זה?</strong> כלי מעקב משימות לפיתוח תוכנה.</p>
+      <ul>
+        <li>מיועד אך ורק לתלמידי תכנות</li>
+        <li>מחובר ל-GitHub</li>
+        <li>ממשק מהיר ומדויק</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> לא מתאים לפרויקטים שאינם תכנות</div>
+    </div>
+
+    <div class="note-card">
+      <h3>Lucidchart + Figma <span class="level-badge diagram-only">תיכון — מתקדמים</span></h3>
+      <p><strong>מה זה?</strong> כלי תרשימים מקצועיים לתלמידים עם ניסיון.</p>
+      <ul>
+        <li>התרשימים המקצועיים והמדויקים ביותר</li>
+        <li>Lucidchart — מחובר ל-Google Drive</li>
+        <li>Figma — מצוין לעיצוב ממשקים</li>
+      </ul>
+      <div class="note-box"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> לא מתאים למתחילים — דורשים ניסיון טכני</div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <strong>המלצות בהתאם למטרה:</strong><br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <strong>שיעורי בית ומעקב אישי:</strong> Todoist — הפשוט ביותר<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> <strong>קושי באנגלית / חטיבת ביניים:</strong> monday.com או Canva — עברית מלאה<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <strong>תרשים זרימה פשוט ויפה:</strong> Canva — הקל ביותר, עברית מלאה<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <strong>תרשים זרימה מקצועי, חינמי לגמרי:</strong> draw.io — ללא הרשמה<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <strong>תרשים זרימה קבוצתי:</strong> Miro — שיתוף פעולה בזמן אמת<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <strong>פרויקט קבוצתי בתיכון:</strong> ClickUp או Asana — הכי חינמי לקבוצה<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <strong>סיכומים ולמידה:</strong> Notion — הכוללני ביותר, עם הנחת סטודנטים<br>
+    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> <strong>פרויקט תכנות:</strong> Linear — מיועד לכך<br>
+    <span style="font-size:11.5px;color:var(--text-muted)">כל הנתונים עדכניים לחודש מאי 2026 ועשויים להשתנות. לחץ על שם הכלי לכניסה לאתר הרשמי.</span>
+  </div>
+
+</div>
+</body>
+</html>

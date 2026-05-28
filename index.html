@@ -60,7 +60,7 @@
     font-size: 11.5px;
     font-weight: 600;
     padding: 12px 10px;
-    text-align: right;
+    text-align: center;
     border-left: 1px solid rgba(255,255,255,0.07);
     vertical-align: bottom;
   }
@@ -107,6 +107,7 @@
 
   .footer-note { background: var(--bg-white); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; margin-top: 24px; font-size: 13px; color: #1f2937; box-shadow: var(--shadow); line-height: 1.9; }
   .footer-note strong { color: var(--text-main); }
+  .footer-note .items { display: block; padding-right: 40px; margin-top: 6px; }
 
   @media (max-width: 700px) {
     header { padding: 22px 14px; }
@@ -463,8 +464,8 @@
   </div>
 
   <div class="footer-note">
-    <strong>המלצות בהתאם למטרה:</strong><br>
-    <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <strong>שיעורי בית ומעקב אישי:</strong> Todoist — הפשוט ביותר<br>
+    <strong>המלצות בהתאם למטרה:</strong>
+    <div class="items"><svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <strong>שיעורי בית ומעקב אישי:</strong> Todoist — הפשוט ביותר<br>
     <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> <strong>קושי באנגלית / חטיבת ביניים:</strong> monday.com או Canva — עברית מלאה<br>
     <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <strong>תרשים זרימה פשוט ויפה:</strong> Canva — הקל ביותר, עברית מלאה<br>
     <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg> <strong>תרשים זרימה מקצועי, חינמי לגמרי:</strong> draw.io — ללא הרשמה<br>
@@ -472,7 +473,8 @@
     <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> <strong>פרויקט קבוצתי בתיכון:</strong> ClickUp או Asana — הכי חינמי לקבוצה<br>
     <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> <strong>סיכומים ולמידה:</strong> Notion — הכוללני ביותר, עם הנחת סטודנטים<br>
     <svg style="display:inline;vertical-align:-3px;margin-left:4px" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2563a8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> <strong>פרויקט תכנות:</strong> Linear — מיועד לכך<br>
-    <span style="font-size:11.5px;color:var(--text-muted)">כל הנתונים עדכניים לחודש מאי 2026 ועשויים להשתנות. לחץ על שם הכלי לכניסה לאתר הרשמי.</span>
+    <div style="text-align:center;font-size:11.5px;color:var(--text-muted);margin-top:10px">כל הנתונים עדכניים לחודש מאי 2026 ועשויים להשתנות. לחץ על שם הכלי לכניסה לאתר הרשמי.</div>
+    </div>
   </div>
 
 </div>
